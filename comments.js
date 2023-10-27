@@ -1,29 +1,22 @@
-//create web server
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var Comment = require('./models/comment');
-var Post = require('./models/post');
-var User = require('./models/user');
-var jwt = require('jsonwebtoken');
-var config = require('./config');
-var cors = require('cors');
-var port = process.env.PORT || 8080;
-mongoose.connect(config.database);
-app.set('superSecret', config.secret);
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cors());
-//create router
-var router = express.Router();
-//middleware
-router.use(function (req, res, next) {
-    console.log('Something is happening.');
-    next();
-});
-//test route
-router.get('/', function (req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });
-});
-//route to authenticate a user (POST http://localhost:8080/api/authenticate)
+// Create web server 
+// 1. Load modules
+const express = require('express')
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const morgan = require('morgan')
+// 2. Create an instance of express
+const app = express()
+// 3. Setup your application
+app.use(morgan('combined'))
+app.use(bodyParser.json())
+app.use(cors())
+// 4. Define your endpoints/route handlers
+app.get('/posts/:id', (req, res) => {
+    res.send(
+        {
+            message: 'Hello world!'
+        }
+    )
+})
+// 5. Start your server
+app.listen(process.env.PORT || 8081)
